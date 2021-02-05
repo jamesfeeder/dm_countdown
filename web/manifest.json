@@ -1,15 +1,13 @@
 {
-    "name": "dm_countdown",
-    "short_name": "dm_countdown",
+    "name": "DM Project Countdown",
+    "short_name": "DM Countdown",
     "start_url": ".",
-    "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
-    "orientation": "portrait-primary",
+    "display": "fullscreen",
+    "background_color": "#263238",
+    "theme_color": "#263238",
+    "description": "A countdown for DM Project DM7",
     "prefer_related_applications": false,
-    "icons": [
-        {
+    "icons": [{
             "src": "icons/Icon-192.png",
             "sizes": "192x192",
             "type": "image/png"
