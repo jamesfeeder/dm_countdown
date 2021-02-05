@@ -11,9 +11,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'DM Countdown',
+      themeMode: ThemeMode.dark,
       theme: ThemeData(
+        brightness: Brightness.light,
+        backgroundColor: Colors.grey[200],
+        scaffoldBackgroundColor: Colors.blueGrey[100],
         primarySwatch: Colors.blue,
-        textTheme: GoogleFonts.alataTextTheme()
+        textTheme: GoogleFonts.quicksandTextTheme()
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        backgroundColor: Colors.black,
+        scaffoldBackgroundColor: Colors.blueGrey[900],
+        primarySwatch: Colors.blue,
+        textTheme: GoogleFonts.quicksandTextTheme().apply(bodyColor: Colors.white)
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -73,10 +84,73 @@ class _MyHomePageState extends State<MyHomePage> {
     var min = formatNumber((eventDiff.inMinutes - (eventDiff.inHours*60)).abs());
     var sec = formatNumber((eventDiff.inSeconds - (eventDiff.inMinutes*60)).abs());
     return Scaffold(
-      body: Center(
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width, 
+            height: MediaQuery.of(context).size.height,
+            decoration: BoxDecoration(
+              color: Theme.of(context).brightness == Brightness.light ? Colors.grey[100] : Colors.grey[800],
+              gradient: RadialGradient(
+                center: Alignment.topLeft,
+                radius: 8,
+                focal: Alignment.topLeft,
+                colors: Theme.of(context).brightness == Brightness.light 
+                ? [
+                    Colors.white,
+                    Colors.blueGrey[400]
+                  ]
+                : [
+                    Colors.blueGrey[800],
+                    Colors.blueGrey[900]
+                  ]
+              ),
+            ),
+          ),
+          clockCard(context, eventDiff, day, hrs, min, sec),
+        ],
+      ),
+    );
+  }
+
+  Widget clockCard(BuildContext context, Duration eventDiff, String day, String hrs, String min, String sec) {
+    return Center(
+      child: Container(
+        margin: EdgeInsets.all(16),
+        padding: EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Theme.of(context).brightness == Brightness.light ? Colors.grey[100] : Colors.grey[800],
+          border: Border.all(width: 1, color: Colors.white12),
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: Theme.of(context).brightness == Brightness.light 
+          ? [
+              BoxShadow(color: Colors.blueGrey[600], offset: Offset(16,16), blurRadius: 48, spreadRadius: -8),
+              BoxShadow(color: Colors.white, offset: Offset(-16,-16), blurRadius: 48, spreadRadius: 8),
+            ]
+          : [
+              BoxShadow(color: Colors.black54, offset: Offset(16,16), blurRadius: 48, spreadRadius: 8),
+              BoxShadow(color: Colors.blueGrey[700], offset: Offset(-16,-16), blurRadius: 48, spreadRadius: -8),
+            ],
+          gradient: RadialGradient(
+            center: Alignment.topLeft,
+            radius: 8,
+            focal: Alignment.topLeft,
+            colors: Theme.of(context).brightness == Brightness.light 
+            ? [
+                Colors.white,
+                Colors.blueGrey[50]
+              ]
+            : [
+                Colors.blueGrey[800],
+                Colors.blueGrey[900]
+              ]
+          ),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
             FittedBox(
               child: Column(
@@ -85,65 +159,62 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text("${_currentEvent.name}", style: TextStyle(fontSize: 28)),
-                  SizedBox(height: 24,),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        if (eventDiff.inDays.abs() >= 1) SizedBox(
-                          width: eventDiff.isNegative ? 108 : 80,
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text("$day", style: TextStyle(fontSize: 56))
-                          )
-                        ),
-                        if (eventDiff.inDays.abs() >= 1) SizedBox(
-                          width: eventDiff.inDays.abs() > 1 ? 138 : 108,
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text(eventDiff.inDays.abs() > 1 ? "Days" : "Day", style: TextStyle(fontSize: 56))
-                          )
-                        ),
-                        SizedBox(
-                          width: 80,
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text("$hrs", style: TextStyle(fontSize: 56))
-                          )
-                        ),
-                        SizedBox(
-                          width: 24,
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text(":", style: TextStyle(fontSize: 56))
-                          )
-                        ),
-                        SizedBox(
-                          width: 80,
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text("$min", style: TextStyle(fontSize: 56))
-                          )
-                        ),
-                        SizedBox(
-                          width: 24,
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text(":", style: TextStyle(fontSize: 56))
-                          )
-                        ),
-                        SizedBox(
-                          width: 80,
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text("$sec", style: TextStyle(fontSize: 56))
-                          )
-                        ),
-                      ],
-                    ),
+                  SizedBox(height: 8),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (eventDiff.inDays.abs() >= 1) SizedBox(
+                        width: eventDiff.isNegative ? 108 : 84,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text("$day", style: TextStyle(fontSize: 56))
+                        )
+                      ),
+                      if (eventDiff.inDays.abs() >= 1) SizedBox(
+                        width: eventDiff.inDays.abs() > 1 ? 138 : 108,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text(eventDiff.inDays.abs() > 1 ? "Days" : "Day", style: TextStyle(fontSize: 56))
+                        )
+                      ),
+                      SizedBox(
+                        width: 84,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text("$hrs", style: TextStyle(fontSize: 56))
+                        )
+                      ),
+                      SizedBox(
+                        width: 24,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text(":", style: TextStyle(fontSize: 56))
+                        )
+                      ),
+                      SizedBox(
+                        width: 84,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text("$min", style: TextStyle(fontSize: 56))
+                        )
+                      ),
+                      SizedBox(
+                        width: 24,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text(":", style: TextStyle(fontSize: 56))
+                        )
+                      ),
+                      SizedBox(
+                        width: 84,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text("$sec", style: TextStyle(fontSize: 56))
+                        )
+                      ),
+                    ],
                   )
                 ],
               ),
