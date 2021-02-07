@@ -1,17 +1,27 @@
 import 'package:dm_countdown/model.dart';
+import 'package:dm_countdown/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final themeManagerProvider = ChangeNotifierProvider.autoDispose<ThemeManager>((ref) => ThemeManager());
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ScopedReader watch) {
+    ThemeManager _themeProvider = watch(themeManagerProvider);
+    _themeProvider.loadDefault();
     return MaterialApp(
-      title: 'DM Countdown',
-      themeMode: ThemeMode.dark,
+      title: 'DM7 Countdown',
+      themeMode: _themeProvider.theme,
       theme: ThemeData(
         brightness: Brightness.light,
         backgroundColor: Colors.grey[200],
@@ -46,7 +56,11 @@ class _MyHomePageState extends State<MyHomePage> {
     Event(name: "Project in DM 1 : 1st Presentation", time: DateTime(2020, 12, 21, 8, 30)),
     Event(name: "Happy New Year 2021", time: DateTime(2021)),
     Event(name: "Project in DM 1 : 2nd Presentation", time: DateTime(2021, 1, 25, 8, 30)),
-    Event(name: "Project in DM 1 : Final Presentation", time: DateTime(2021, 3, 16, 8, 30))
+    Event(name: "Project in DM 1 : Final Presentation", time: DateTime(2021, 3, 16, 8, 30)),
+    Event(name: "Internship : Start", time: DateTime(2021, 4, 1)),
+    Event(name: "Internship : End", time: DateTime(2021, 6, 1)),
+    Event(name: "Cooperative Education : Start", time: DateTime(2021, 6, 21)),
+    Event(name: "Cooperative Education : End", time: DateTime(2021, 10, 9)),
   ];
 
   Event _currentEvent;
@@ -98,13 +112,38 @@ class _MyHomePageState extends State<MyHomePage> {
                 focal: Alignment.topLeft,
                 colors: Theme.of(context).brightness == Brightness.light 
                 ? [
-                    Colors.white,
+                    Colors.blueGrey[50],
                     Colors.blueGrey[400]
                   ]
                 : [
                     Colors.blueGrey[800],
                     Colors.blueGrey[900]
                   ]
+              ),
+            ),
+            child: Align(
+              alignment: Alignment.topRight,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text("Light Theme"),
+                      Consumer(
+                        builder: (context, watch, child) {
+                          ThemeManager _themeProvider = watch(themeManagerProvider);
+                          return Switch(
+                            value: Theme.of(context).brightness == Brightness.dark,
+                            onChanged: (value) => _themeProvider.isDark = value
+                          );
+                        }
+                      ),
+                      Text("Dark Theme"),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
