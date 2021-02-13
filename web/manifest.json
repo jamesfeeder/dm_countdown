@@ -2,7 +2,7 @@
     "name": "DM7 Countdown",
     "short_name": "DM7 Countdown",
     "start_url": ".",
-    "display": "fullscreen",
+    "display": "standalone",
     "background_color": "#263238",
     "theme_color": "#263238",
     "description": "A countdown for DM Project DM7",
