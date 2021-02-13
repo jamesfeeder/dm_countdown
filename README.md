@@ -1,16 +1,19 @@
-# dm_countdown
+# DM7 Countdown
 
-A new Flutter project.
+A countdown web app for PSUIC DM7
 
-## Getting Started
+## Release Note
 
-This project is a starting point for a Flutter application.
+### 1.0.0
 
-A few resources to get you started if this is your first Flutter project:
+Just made it for my 2021 Happy New Year Meme using Instagram Story.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+### 1.1.0
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Apply the theme to the web app. Just make it more appealing (maybe?)
+
+- __1.1.1__ Update new event and fix some color value that I forgot to apply
+
+----
+
+__Flutter Version__  1.27.0-2.0.pre.96

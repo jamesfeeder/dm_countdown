@@ -5,7 +5,7 @@
     "display": "standalone",
     "background_color": "#263238",
     "theme_color": "#263238",
-    "description": "A countdown for DM Project DM7",
+    "description": "A countdown Web App for DM7",
     "prefer_related_applications": false,
     "icons": [{
             "src": "icons/Icon-192.png",
