@@ -26,25 +26,23 @@ class MyApp extends ConsumerWidget {
         brightness: Brightness.light,
         backgroundColor: Colors.grey[200],
         scaffoldBackgroundColor: Colors.blueGrey[100],
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.blueGrey,
         textTheme: GoogleFonts.quicksandTextTheme()
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         backgroundColor: Colors.black,
         scaffoldBackgroundColor: Colors.blueGrey[900],
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.blueGrey,
         textTheme: GoogleFonts.quicksandTextTheme().apply(bodyColor: Colors.white)
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
+  MyHomePage({Key key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -56,6 +54,8 @@ class _MyHomePageState extends State<MyHomePage> {
     Event(name: "Project in DM 1 : 1st Presentation", time: DateTime(2020, 12, 21, 8, 30)),
     Event(name: "Happy New Year 2021", time: DateTime(2021)),
     Event(name: "Project in DM 1 : 2nd Presentation", time: DateTime(2021, 1, 25, 8, 30)),
+    Event(name: "Project in DM 1 : Final Report Submission", time: DateTime(2021, 3, 3)),
+    Event(name: "Project in DM 1 : Final Report Deadline", time: DateTime(2021, 3, 4)),
     Event(name: "Project in DM 1 : Final Presentation", time: DateTime(2021, 3, 16, 8, 30)),
     Event(name: "Internship : Start", time: DateTime(2021, 4, 1)),
     Event(name: "Internship : End", time: DateTime(2021, 6, 1)),
@@ -105,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
             width: MediaQuery.of(context).size.width, 
             height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
-              color: Theme.of(context).brightness == Brightness.light ? Colors.grey[100] : Colors.grey[800],
+              color: Theme.of(context).brightness == Brightness.light ? Colors.blueGrey[100] : Colors.blueGrey[800],
               gradient: RadialGradient(
                 center: Alignment.topLeft,
                 radius: 8,
@@ -124,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Align(
               alignment: Alignment.topRight,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: SizedBox(
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -160,7 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
         padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: Theme.of(context).brightness == Brightness.light ? Colors.grey[100] : Colors.grey[800],
-          border: Border.all(width: 1, color: Colors.white12),
+          border: Border.all(width: 1, color: Colors.white10),
           borderRadius: BorderRadius.circular(16),
           boxShadow: Theme.of(context).brightness == Brightness.light 
           ? [
