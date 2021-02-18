@@ -1,5 +1,5 @@
 name: dm_countdown
-description: A new Flutter project.
+description: A countdown Web App for DM7.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
