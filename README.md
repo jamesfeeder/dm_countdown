@@ -2,6 +2,8 @@
 
 A countdown web app for PSUIC DM7
 
+https://dm-countdown.web.app/
+
 ## Release Note
 
 ### 1.0.0
