@@ -4,15 +4,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ThemeManager extends ChangeNotifier {
   ThemeMode _theme = ThemeMode.system;
   ThemeMode get theme => _theme;
-  bool _isDark;
+  late bool _isDark;
   bool get isDark => _isDark;
-  bool _isLoaded;
+  late bool _isLoaded;
 
   void loadDefault() async {
     if (!_isLoaded) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       if (prefs.containsKey("isDark")) {
-        if (prefs.getBool("isDark")) {
+        if (prefs.getBool("isDark")!) {
           _theme = ThemeMode.dark;
           _isDark = true;
         } else {

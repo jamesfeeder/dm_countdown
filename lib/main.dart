@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final themeManagerProvider = ChangeNotifierProvider.autoDispose<ThemeManager>((ref) => ThemeManager());
+final AutoDisposeChangeNotifierProvider<ThemeManager>? themeManagerProvider = ChangeNotifierProvider.autoDispose<ThemeManager>((ref) => ThemeManager());
 
 void main() {
   runApp(
@@ -17,7 +17,7 @@ void main() {
 class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    ThemeManager _themeProvider = watch(themeManagerProvider);
+    ThemeManager _themeProvider = watch(themeManagerProvider!);
     _themeProvider.loadDefault();
     return MaterialApp(
       title: 'DM7 Countdown',
@@ -42,7 +42,7 @@ class MyApp extends ConsumerWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
+  MyHomePage({Key? key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -63,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Event(name: "Cooperative Education : End", time: DateTime(2021, 10, 9)),
   ];
 
-  Event _currentEvent;
+  late Event _currentEvent;
 
   @override
   void initState() {
@@ -112,12 +112,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 focal: Alignment.topLeft,
                 colors: Theme.of(context).brightness == Brightness.light 
                 ? [
-                    Colors.blueGrey[50],
-                    Colors.blueGrey[400]
+                    Colors.blueGrey[50]!,
+                    Colors.blueGrey[400]!
                   ]
                 : [
-                    Colors.blueGrey[800],
-                    Colors.blueGrey[900]
+                    Colors.blueGrey[800]!,
+                    Colors.blueGrey[900]!
                   ]
               ),
             ),
@@ -131,14 +131,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text("Light Theme"),
-                      Consumer(
-                        builder: (context, watch, child) {
-                          ThemeManager _themeProvider = watch(themeManagerProvider);
-                          return Switch(
-                            value: Theme.of(context).brightness == Brightness.dark,
-                            onChanged: (value) => _themeProvider.isDark = value
-                          );
-                        }
+                      Switch(
+                        value: Theme.of(context).brightness == Brightness.dark,
+                        onChanged: (value) => context.read(themeManagerProvider!).isDark = value
                       ),
                       Text("Dark Theme"),
                     ],
@@ -164,12 +159,12 @@ class _MyHomePageState extends State<MyHomePage> {
           borderRadius: BorderRadius.circular(16),
           boxShadow: Theme.of(context).brightness == Brightness.light 
           ? [
-              BoxShadow(color: Colors.blueGrey[600], offset: Offset(16,16), blurRadius: 48, spreadRadius: -8),
+              BoxShadow(color: Colors.blueGrey[600]!, offset: Offset(16,16), blurRadius: 48, spreadRadius: -8),
               BoxShadow(color: Colors.white, offset: Offset(-16,-16), blurRadius: 48, spreadRadius: 8),
             ]
           : [
               BoxShadow(color: Colors.black54, offset: Offset(16,16), blurRadius: 48, spreadRadius: 8),
-              BoxShadow(color: Colors.blueGrey[700], offset: Offset(-16,-16), blurRadius: 48, spreadRadius: -8),
+              BoxShadow(color: Colors.blueGrey[700]!, offset: Offset(-16,-16), blurRadius: 48, spreadRadius: -8),
             ],
           gradient: RadialGradient(
             center: Alignment.topLeft,
@@ -178,11 +173,11 @@ class _MyHomePageState extends State<MyHomePage> {
             colors: Theme.of(context).brightness == Brightness.light 
             ? [
                 Colors.white,
-                Colors.blueGrey[50]
+                Colors.blueGrey[50]!
               ]
             : [
-                Colors.blueGrey[800],
-                Colors.blueGrey[900]
+                Colors.blueGrey[800]!,
+                Colors.blueGrey[900]!
               ]
           ),
         ),
