@@ -6,7 +6,7 @@ class ThemeManager extends ChangeNotifier {
   ThemeMode get theme => _theme;
   late bool _isDark;
   bool get isDark => _isDark;
-  late bool _isLoaded;
+  bool _isLoaded = false;
 
   void loadDefault() async {
     if (!_isLoaded) {

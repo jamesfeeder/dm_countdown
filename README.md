@@ -1,8 +1,9 @@
 # DM7 Countdown
 
-A countdown web app for PSUIC DM7
+A countdown web app for PSUIC DM7.  
+A simple project for me to learn about Flutter Riverpod.
 
-https://dm-countdown.web.app/
+<https://dm-countdown.web.app/>
 
 ## Release Note
 
@@ -16,6 +17,14 @@ Apply the theme to the web app. Just make it more appealing (maybe?)
 
 - __1.1.1__ Update new event and fix some color value that I forgot to apply
 
+### 1.2.0
+
+I'm back!
+
+- Add Project DM 2 Events
+- Upgrade Flutter Riverpod
+- Upgrade Flutter to Version 2.13.0-0.0.pre231
+
 ----
 
-__Flutter Version__  1.27.0-2.0.pre.96
+__Flutter Version__  2.13.0-0.0.pre.231

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final AutoDisposeChangeNotifierProvider<ThemeManager>? themeManagerProvider = ChangeNotifierProvider.autoDispose<ThemeManager>((ref) => ThemeManager());
+final ChangeNotifierProvider<ThemeManager>? themeManagerProvider = ChangeNotifierProvider<ThemeManager>((ref) => ThemeManager());
 
 void main() {
   runApp(
@@ -16,8 +16,8 @@ void main() {
 
 class MyApp extends ConsumerWidget {
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    ThemeManager _themeProvider = watch(themeManagerProvider!);
+  Widget build(BuildContext context, WidgetRef ref) {
+    ThemeManager _themeProvider = ref.watch(themeManagerProvider!);
     _themeProvider.loadDefault();
     return MaterialApp(
       title: 'DM7 Countdown',
@@ -41,14 +41,14 @@ class MyApp extends ConsumerWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends ConsumerStatefulWidget {
   MyHomePage({Key? key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends ConsumerState<MyHomePage> {
 
   final List<Event> _events = [
     Event(name: "Project in DM 1 : 1st Presentation", time: DateTime(2020, 12, 21, 8, 30)),
@@ -61,6 +61,9 @@ class _MyHomePageState extends State<MyHomePage> {
     Event(name: "Internship : End", time: DateTime(2021, 6, 1)),
     Event(name: "Cooperative Education : Start", time: DateTime(2021, 6, 21)),
     Event(name: "Cooperative Education : End", time: DateTime(2021, 10, 9)),
+    Event(name: "Project in DM 2 : 1st Presentation", time: DateTime(2022, 1, 25, 13, 00)),
+    Event(name: "Project in DM 2 : 2nd Presentation", time: DateTime(2022, 3, 3, 13, 00)),
+    Event(name: "Project in DM 2 : Final Presentation", time: DateTime(2022, 3, 29, 13, 00)),
   ];
 
   late Event _currentEvent;
@@ -133,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       Text("Light Theme"),
                       Switch(
                         value: Theme.of(context).brightness == Brightness.dark,
-                        onChanged: (value) => context.read(themeManagerProvider!).isDark = value
+                        onChanged: (value) => ref.read(themeManagerProvider!).isDark = value
                       ),
                       Text("Dark Theme"),
                     ],
@@ -155,15 +158,18 @@ class _MyHomePageState extends State<MyHomePage> {
         padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: Theme.of(context).brightness == Brightness.light ? Colors.grey[100] : Colors.grey[800],
-          border: Border.all(width: 1, color: Colors.white10),
-          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            width: 2, 
+            color: Colors.white12
+          ),
+          borderRadius: BorderRadius.circular(8),
           boxShadow: Theme.of(context).brightness == Brightness.light 
           ? [
-              BoxShadow(color: Colors.blueGrey[600]!, offset: Offset(16,16), blurRadius: 48, spreadRadius: -8),
+              BoxShadow(color: Colors.blueGrey[600]!, offset: Offset(16,16), blurRadius: 24, spreadRadius: -8),
               BoxShadow(color: Colors.white, offset: Offset(-16,-16), blurRadius: 48, spreadRadius: 8),
             ]
           : [
-              BoxShadow(color: Colors.black54, offset: Offset(16,16), blurRadius: 48, spreadRadius: 8),
+              BoxShadow(color: Colors.black54, offset: Offset(16,16), blurRadius: 24, spreadRadius: 8),
               BoxShadow(color: Colors.blueGrey[700]!, offset: Offset(-16,-16), blurRadius: 48, spreadRadius: -8),
             ],
           gradient: RadialGradient(
